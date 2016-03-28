@@ -5,3 +5,8 @@ body {
     width: 500px;
     height: 300px;
 }
+#canvas {
+    /*background-image: url('../img/sample-cga-rates-splash-1.jpg');
+    background-repeat: no-repeat;*/
+    background-color: red;
+}

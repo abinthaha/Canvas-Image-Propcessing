@@ -2,6 +2,42 @@ $(document).ready(function() {
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
 
+
+    $('#image_url').change(function(){
+        var input = this;
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                dataUrl = e.target.result;
+                // var imgcanvas = document.getElementById("ImgCanvas");
+                // var cntx = imgcanvas.getContext("2d");
+                var background = new Image();
+                background.setAttribute('crossOrigin', 'anonymous');
+                background.src = dataUrl;
+                background.onload = function(){
+                    // cntx.clearRect(0, 0, imgcanvas.width, imgcanvas.height);
+                    $('canvas').drawImage({
+                        source: background,
+                        x: 50, y: 50,
+                        width: 160,
+                        height: 200,
+                        fromCenter: false
+                    });
+                    // $('canvas').addLayer({
+                    //     type: 'image',
+                    //     source: background,
+                    //     x: 50, y: 50,
+                    //     width: 160,
+                    //     height: 200,
+                    //     fromCenter: false
+                    // });
+                };
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    })
+
+
     // variables used to get mouse position on the canvas
     var $canvas = $("#canvas");
     var canvasOffset = $canvas.offset();
@@ -22,25 +58,7 @@ $(document).ready(function() {
     // this var will hold the index of the hit-selected text
     var selectedText = -1;
 
-    $('#image_url').change(function(){
-        var input = this;
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                dataUrl = e.target.result;
-                var imgcanvas = document.getElementById("ImgCanvas");
-                var cntx = imgcanvas.getContext("2d");
-                var background = new Image();
-                background.setAttribute('crossOrigin', 'anonymous');
-                background.src = dataUrl;
-                background.onload = function(){
-                    cntx.clearRect(0, 0, imgcanvas.width, imgcanvas.height);
-                    cntx.drawImage(background,10,10,250,125);
-                };
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
-    })
+
 
 
     // clear the canvas & redraw all texts
@@ -49,6 +67,12 @@ $(document).ready(function() {
         for (var i = 0; i < texts.length; i++) {
             var text = texts[i];
             ctx.fillText(text.text, text.x, text.y);
+            // $('canvas').drawText({
+            //     // type: 'text',
+            //     x: text.x,
+            //     y: text.y,
+            //     text: text.text
+            // });
         }
     }
 
