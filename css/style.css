@@ -1,20 +1,25 @@
-.canvasContainer{
-  height: 500px;
-  display: inline-block;
-  width: 70%;
-  margin: 0 auto;
-  text-align: center;
+body {
+    background-color: rgba(0, 0, 0, 0.1);
 }
-.buttons_wrapper{
-  height: 100px;
-  margin: 0 auto;
-  text-align: center;
-  display: flex;
-  flex-direction: row;
+#canvas {
+    border-radius: 10px;
 }
-.b1, .b2, .b3{
-  flex-grow: 1;
-  align-items: center;
+.canvasContainer {
+    background-color: white;
+    height: 400px;
+    border-radius: 10px;
+    text-align: center;
+    padding: 10px;
+}
+.buttons_wrapper {
+    margin: 30px 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+}
+.b1, .b2, .b3 {
+    flex-grow: 1;
+    align-items: center;
 }
 .buttons {
     padding: 5px 10px;
