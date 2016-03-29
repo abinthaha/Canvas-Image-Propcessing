@@ -11,25 +11,22 @@
 </head>
 
 <body>
-    <div class="buttons">
+    <div class="buttons_wrapper">
         <div class="b1">
             <input type="file" id="image_url" name="" accept="image/*">
         </div>
         <div class="b2">
-            <input type="text" id="thetext" value="" placeholder="Type">
-            <button id="submit">
-                Draw
-            </button>
+            <input class="text_area transition" type="text" id="thetext" value="" placeholder="Type">
+            <span class='buttons transition' id="submit">Draw</span>
         </div>
     </div>
     <div class="canvasContainer">
         <canvas id="canvas" width="400" height="400"></canvas>
     </div>
     <div class="save_container">
-        <input type="text" id="saveName" value="" placeholder="Name">
-        <span type="button" name="button" id="btn-download">Save</span>
+        <input class="text_area transition" type="text" id="saveName" value="" placeholder="Name">
+        <span class='buttons transition' type="button" name="button" id="btn-download">Save</span>
     </div>
 
 </body>
-
 </html>

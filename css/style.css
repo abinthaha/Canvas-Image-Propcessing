@@ -1,11 +1,11 @@
 .canvasContainer{
   height: 500px;
   display: inline-block;
-  width: 60%;
+  width: 70%;
   margin: 0 auto;
   text-align: center;
 }
-.buttons{
+.buttons_wrapper{
   height: 100px;
   margin: 0 auto;
   text-align: center;
@@ -16,18 +16,33 @@
   flex-grow: 1;
   align-items: center;
 }
-#btn-download {
+.buttons {
     padding: 5px 10px;
+    cursor: pointer;
     color: #fff;
     background-color: #008BBA;
-    transition: all 0.3s linear;
+    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.5);
     border-radius: 5px;
 }
-#btn-download:hover {
+.buttons:hover {
     background-color: #69D2E7;
     color: #542733;
+    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.6);
 }
 .save_container {
     display: inline-block;
-    width: 30%;
+    width: 25%;
+}
+.text_area {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    outline: none;
+}
+.transition {
+    transition: all 0.3s linear;
+}
+.text_area:focus {
+    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 0, 0, 0.6);
 }

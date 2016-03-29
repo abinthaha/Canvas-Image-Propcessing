@@ -3,7 +3,6 @@ $(document).ready(function() {
     var ctx = canvas.getContext("2d");
 
     $('#image_url').change(function() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
         var input = this;
         if (input.files && input.files[0]) {
             var reader = new FileReader();
@@ -14,7 +13,6 @@ $(document).ready(function() {
                 background.setAttribute('crossOrigin', 'anonymous');
                 background.src = dataUrl;
                 background.onload = function() {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
                     $('canvas').drawImage({
                         layer: true,
                         source: background,
@@ -40,8 +38,10 @@ $(document).ready(function() {
     }, false);
 
     var texts = [];
+
     function draw() {
         var text = texts[0];
+        $('canvas').removeLayer('textBox');
         $('canvas').addLayer({
             type: 'text',
             name: 'textBox',
@@ -53,8 +53,8 @@ $(document).ready(function() {
             fontSize: 48,
             fontFamily: 'Verdana, sans-serif',
             text: text.text,
-            x: text.x,
-            y: text.y,
+            x: 200,
+            y: 200
         }).drawLayers();
     }
 
@@ -64,10 +64,8 @@ $(document).ready(function() {
             x: 100,
             y: 100
         };
-        ctx.font = "16px verdana";
+        texts = [];
         text.text = $('#thetext').val();
-        text.width = ctx.measureText(text.text).width;
-        text.height = 16;
         texts.push(text);
         draw();
     });
