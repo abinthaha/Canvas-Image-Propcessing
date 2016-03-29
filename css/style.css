@@ -1,5 +1,7 @@
 .canvasContainer{
   height: 500px;
+  display: inline-block;
+  width: 60%;
   margin: 0 auto;
   text-align: center;
 }
@@ -14,8 +16,18 @@
   flex-grow: 1;
   align-items: center;
 }
-.button{
-  background-color: green;
-  padding: 10px;
-  text-decoration: none;
+#btn-download {
+    padding: 5px 10px;
+    color: #fff;
+    background-color: #008BBA;
+    transition: all 0.3s linear;
+    border-radius: 5px;
+}
+#btn-download:hover {
+    background-color: #69D2E7;
+    color: #542733;
+}
+.save_container {
+    display: inline-block;
+    width: 30%;
 }
