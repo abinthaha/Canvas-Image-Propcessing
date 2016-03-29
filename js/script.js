@@ -1,11 +1,14 @@
 $(document).ready(function() {
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
+    var fileName;
 
     $('#image_url').change(function() {
         var input = this;
         if (input.files && input.files[0]) {
             var reader = new FileReader();
+            fileName = input.files[0].name;
+            fileName = 'cip - ' + fileName.split('.')[0];
             reader.onload = function(e) {
                 dataUrl = e.target.result;
                 var canvas = document.getElementById("canvas");
@@ -27,14 +30,27 @@ $(document).ready(function() {
         }
     })
 
-    function downloadCanvas(link, canvasId, filename) {
+    function downloadCanvas(link, canvasId) {
         var canvas = document.getElementById("canvas");
         var urlData = canvas.toDataURL("image/png");
+        var myFirebaseRef = new Firebase("https://sample-app2.firebaseio.com/CanvasImage");
+        var Result = Math.floor((Math.random() * 100) + 1);
+
+        myFirebaseRef.push({
+            id: Result,
+            name: fileName,
+            dataUrl: urlData
+        }).set('I am writing data', function(error) {
+            if (error) {
+                alert("Data could not be saved.");
+            } else {
+                alert('File saved with Id ' + Result + ' Save this for future use')
+            }
+        });
         //Now the backend call should happen
     }
     document.getElementById('btn-download').addEventListener('click', function() {
-        var name = $('#saveName').val();
-        downloadCanvas(this, 'canvas', name);
+        downloadCanvas(this, 'canvas');
     }, false);
 
     var texts = [];
