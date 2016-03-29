@@ -1,24 +1,33 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset=utf-8>
-		<title>Canvas App</title>
-        <link rel="stylesheet" href="styles/style.css" media="screen" title="no title" charset="utf-8">
-        <script src="js/jquery-2.2.2.min.js" charset="utf-8"></script>
-		<script src="js/jcanvas.min.js" charset="utf-8"></script>
-        <script src="js/script.js"></script>
-	</head>
-	<body>
-        <div class="wrapper">
-            <input type="file" id="image_url" name="" accept="image/*" >
-            <input type="submit" id="img_submit">
-            <input type="text" id="thetext" value="">
-            <button id="submit">
-                Draw text on Canvas
-            </button>
-            <canvas id="canvas" width="400" height="400"></canvas>
-                <!-- <canvas id="ImgCanvas" width="300" height="300"></canvas> -->
-            <a href="#" class="button" id="btn-download">Download</a>
-        </div>
-	</body>
+
+<head>
+  <meta charset="utf-8">
+  <title>Sample canvas</title>
+  <script src="js/jquery-2.2.2.min.js" charset="utf-8"></script>
+  <script src="js/jcanvas.min.js" charset="utf-8"></script>
+  <script src="js/script.js"></script>
+  <link rel="stylesheet" href="/css/style.css" media="screen" title="no title" charset="utf-8">
+</head>
+
+<body>
+  <div class="canvasContainer">
+    <canvas id="canvas" width="400" height="400"></canvas>
+  </div>
+  <div class="buttons">
+    <div class="b1">
+      <input type="file" id="image_url" name="" accept="image/*">
+    </div>
+    <div class="b2">
+      <input type="text" id="thetext" value="">
+      <button id="submit">
+        Draw text on Canvas
+      </button>
+    </div>
+    <div class="b3">
+      <a href="#" class="button" id="btn-download">Download</a>
+    </div>
+  </div>
+</body>
+
 </html>

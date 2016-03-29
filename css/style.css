@@ -1,0 +1,21 @@
+.canvasContainer{
+  height: 500px;
+  margin: 0 auto;
+  text-align: center;
+}
+.buttons{
+  height: 100px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+}
+.b1, .b2, .b3{
+  flex-grow: 1;
+  align-items: center;
+}
+.button{
+  background-color: green;
+  padding: 10px;
+  text-decoration: none;
+}
