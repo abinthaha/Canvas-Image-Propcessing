@@ -2,6 +2,7 @@ $(document).ready(function() {
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
     var fileName;
+    var myFirebaseRef = new Firebase("https://sample-app2.firebaseio.com/CanvasImage");
 
     $('#image_url').change(function() {
         var input = this;
@@ -11,36 +12,41 @@ $(document).ready(function() {
             fileName = 'cip - ' + fileName.split('.')[0];
             reader.onload = function(e) {
                 dataUrl = e.target.result;
-                var canvas = document.getElementById("canvas");
-                var background = new Image();
-                background.setAttribute('crossOrigin', 'anonymous');
-                background.src = dataUrl;
-                background.onload = function() {
-                    $('canvas').drawImage({
-                        layer: true,
-                        source: background,
-                        x: 0,
-                        y: 0,
-                        width: 800,
-                        height: 800
-                    });
-                };
+                drawImage(dataUrl);
             };
             reader.readAsDataURL(input.files[0]);
         }
     })
+    var drawImage = function(dataUrl) {
+        var canvas = document.getElementById("canvas");
+        var background = new Image();
+        background.setAttribute('crossOrigin', 'anonymous');
+        background.src = dataUrl;
+        var iHeight = background.height,
+            iWidth = background.width;
 
+        background.onload = function() {
+            $('canvas').drawImage({
+                layer: true,
+                source: background,
+                swidth: iWidth,
+                sheight: iHeight,
+                x: 200,
+                y: 200,
+                width: iWidth ,
+                height: iHeight
+            });
+        };
+    }
     function downloadCanvas(link, canvasId) {
         var canvas = document.getElementById("canvas");
         var urlData = canvas.toDataURL("image/png");
-        var myFirebaseRef = new Firebase("https://sample-app2.firebaseio.com/CanvasImage");
         var Result = Math.floor((Math.random() * 100) + 1);
-
         myFirebaseRef.push({
             id: Result,
             name: fileName,
             dataUrl: urlData
-        }).set('I am writing data', function(error) {
+        }, function(error) {
             if (error) {
                 alert("Data could not be saved.");
             } else {
@@ -52,6 +58,23 @@ $(document).ready(function() {
     document.getElementById('btn-download').addEventListener('click', function() {
         downloadCanvas(this, 'canvas');
     }, false);
+    $('#retrieve_button').on('click', function() {
+        var id = $('#receive_id').val();
+        myFirebaseRef.on('value', function(snapShot){
+            snapShot.forEach(function(singleData) {
+                var data = singleData.val();
+                if(data.id == id) {
+                    drawImage(data.dataUrl);
+                }
+            })
+        }, function(error) {
+            if (error) {
+                console.log('Cannot get');
+            } else {
+                console.log('got it');
+            }
+        })
+    })
 
     var texts = [];
 
