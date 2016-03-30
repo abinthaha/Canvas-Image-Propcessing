@@ -1,8 +1,12 @@
 $(document).ready(function() {
-    var canvas = document.getElementById("canvas");
-    var ctx = canvas.getContext("2d");
-    var fileName;
-    var myFirebaseRef = new Firebase("https://sample-app2.firebaseio.com/CanvasImage");
+
+    /**Variable Initializations*/
+    var canvas = document.getElementById("canvas"),
+        fileName,
+        texts = [],
+        myFirebaseRef = new Firebase("https://sample-app2.firebaseio.com/CanvasImage");
+
+    /** Uploading an Image on clicking the input type*/
 
     $('#image_url').change(function() {
         var input = this;
@@ -17,8 +21,10 @@ $(document).ready(function() {
             reader.readAsDataURL(input.files[0]);
         }
     })
+
+    /**This function is used to draw the Image on the Canvas*/
+
     var drawImage = function(dataUrl) {
-        var canvas = document.getElementById("canvas");
         var background = new Image();
         background.setAttribute('crossOrigin', 'anonymous');
         background.src = dataUrl;
@@ -38,10 +44,12 @@ $(document).ready(function() {
             });
         };
     }
-    function downloadCanvas(link, canvasId) {
-        var canvas = document.getElementById("canvas");
-        var urlData = canvas.toDataURL("image/png");
-        var Result = Math.floor((Math.random() * 100) + 1);
+
+    /**The saving of Canvas as an Image in Firebase is happening here*/
+
+    $('#btn-download').on('click', function(){
+        var urlData = canvas.toDataURL("image/png"),
+            Result = Math.floor((Math.random() * 100) + 1);
         myFirebaseRef.push({
             id: Result,
             name: fileName,
@@ -53,30 +61,21 @@ $(document).ready(function() {
                 alert('File saved with Id ' + Result + ' Save this for future use')
             }
         });
-        //Now the backend call should happen
-    }
-    document.getElementById('btn-download').addEventListener('click', function() {
-        downloadCanvas(this, 'canvas');
-    }, false);
-    $('#retrieve_button').on('click', function() {
-        var id = $('#receive_id').val();
-        myFirebaseRef.on('value', function(snapShot){
-            snapShot.forEach(function(singleData) {
-                var data = singleData.val();
-                if(data.id == id) {
-                    drawImage(data.dataUrl);
-                }
-            })
-        }, function(error) {
-            if (error) {
-                console.log('Cannot get');
-            } else {
-                console.log('got it');
-            }
-        })
-    })
+    });
 
-    var texts = [];
+    /**On clicking the draw button, this function is being called*/
+
+    $("#submit").click(function() {
+        var text = {
+            text: $("#theText").val(),
+            x: 100,
+            y: 100
+        };
+        texts = [];
+        text.text = $('#thetext').val();
+        texts.push(text);
+        draw();
+    });
 
     function draw() {
         var text = texts[0];
@@ -97,15 +96,28 @@ $(document).ready(function() {
         }).drawLayers();
     }
 
-    $("#submit").click(function() {
-        var text = {
-            text: $("#theText").val(),
-            x: 100,
-            y: 100
-        };
-        texts = [];
-        text.text = $('#thetext').val();
-        texts.push(text);
-        draw();
-    });
+    /**This function is used to retreive an already saved Image from firebase*/
+
+    $('#retrieve_button').on('click', function() {
+        var id = $('#receive_id').val();
+        myFirebaseRef.on('value', function(snapShot){
+            var flag = true;
+            snapShot.forEach(function(singleData) {
+                var data = singleData.val();
+                if(data.id == id) {
+                    drawImage(data.dataUrl);
+                    flag = false;
+                }
+            })
+            if (flag) {
+                alert('The Image with the ID you entered cannot be find from the Firebase, Check the ID')
+            }
+        }, function(error) {
+            if (error) {
+                console.log('Cannot get' +error);
+            } else {
+                console.log('got it');
+            }
+        })
+    })
 });
